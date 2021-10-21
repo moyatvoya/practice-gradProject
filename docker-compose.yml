@@ -1,0 +1,21 @@
+version: "3"
+services:
+  flask:
+    image: flaskes
+    command: python3 app.py
+    container_name: flaskes-1.0
+    environment:
+      - discovery.type=single-node
+    ports:
+      - 5000:5000
+    volumes:
+      - vol:/media
+
+networks:
+  default:
+    external: 
+      name: flaskes
+
+volumes:
+    vol:
+     

@@ -1,0 +1,7 @@
+# DEfault Values for flaskex Helm Chart
+
+container:
+  image        : smout/flaskes
+  containerPort: 5000
+  
+replicaCount: 2

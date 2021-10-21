@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaskes-pod-service
+  labels:
+    env: test-svc
+    owner: AT
+spec:
+  selector:
+    project: edu  
+  ports:
+    - name       : app-listener
+      protocol   : TCP
+      port       : 5000 # Port on Load Balancer
+      targetPort : 5000 # Port on POD
+  type: LoadBalancer

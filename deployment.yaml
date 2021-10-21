@@ -1,0 +1,46 @@
+apiVersion : apps/v1
+kind : Deployment
+metadata: 
+  name: flaskes-depl
+  labels:
+    app : flaskes-app
+    env: test
+    owner: AT
+spec: 
+  replicas: 2
+  selector:
+    matchLabels:
+      project: edu
+  template:
+    metadata:
+      labels:
+        project: edu
+    spec:
+      containers:
+        - name: flaskes
+          image: smout/flaskes
+          command: ["python3", "./app.py"]
+          ports:
+            - containerPort: 5000
+
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: autoscale-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v2beta1v1
+    kind: Deployment
+    name: flaskes-deployment-autoscaling
+  minReplicas: 2
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: 80
