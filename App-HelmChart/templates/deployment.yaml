@@ -30,7 +30,7 @@ metadata:
   name: autoscale-app
 spec:
   scaleTargetRef:
-    apiVersion: apps/v2beta1v1
+    apiVersion: apps/v2beta1v2
     kind: Deployment
     name: {{ .Release.Name }}-deployment-autoscaling
   minReplicas: {{ .Values.replicaCount }}
@@ -39,8 +39,12 @@ spec:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: 70
+      target:
+        type: Utilization
+        averageUtilization: 70
   - type: Resource
     resource:
       name: memory
-      targetAverageUtilization: 80
+      target:
+        type: Utilization
+        averageUtilization: 80
